@@ -33,16 +33,16 @@ clean:
 # Run 'make qadmin' to build the qadmin tool
 #
 qadmin: qadmin.cpp
-	g++ qadmin.cpp -o qadmin
+	g++ -std=c++17 qadmin.cpp -o qadmin
 
 #
 # Run 'make qtool' to build the qadmin tool
 #
 qtool: qtool.cpp
-	g++ qtool.cpp -o qtool
+	g++ -std=c++17 qtool.cpp -o qtool
 
 #
 # Run 'make qworker' to build the qadmin tool
 #
-qworker: qworker.cpp
-	g++ qworker.cpp -o qworker
+qworker: qworker.cpp jobs.cpp jobs.h
+	g++ -std=c++17 qworker.cpp jobs.cpp -o qworker
