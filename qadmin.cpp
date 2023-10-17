@@ -8,14 +8,23 @@ int add(int argc, char **argv)
         Example argv:
         qadmin add user <first name> <last name> <email> <department> <optional list of group names>
     */
-
+    
     std::string token = argv[2];
 
     if (token == "user") {
-
+        for (int i = 3; i < argc; i++) {
+            // do stuff to add argv[i] to database somehow
+        }
     }
     else if (token == "department") {
-
+        for (int i = 3; i < argc; i++) {
+            // do stuff to add argv[i] to database somehow
+        }
+    }
+    else if (token == "group") {
+        for (int i = 3; i < argc; i++) {
+            // do stuff to add argv[i] to database somehow
+        }
     }
 
     return 0;
@@ -23,19 +32,53 @@ int add(int argc, char **argv)
 
 int list(int argc, char **argv)
 {
-    // TODO, implement the list command
+    std::string token = argv[2];
+
+    if (token == "user") {
+        for (int i = 3; i < argc; i++) {
+            // do stuff to print all users
+        }
+    }
+    else if (token == "department") {
+        for (int i = 3; i < argc; i++) {
+            // do stuff to print all departments
+        }
+    }
+    else if (token == "group") {
+        for (int i = 3; i < argc; i++) {
+            // do stuff to print all groups
+        }
+    }
     return 0;
 }
 
 int remove(int argc, char **argv)
 {
-    // TODO, implement the list command
+    std::string token = argv[2];
+
+    if (token == "user") {
+        // check for user-specific paramaters like name
+        // replace data with a "deleted_at" timestamp for soft delete
+    }
+    else if (token == "group") {
+        // check for group-specific paramaters like group_name
+        // replace data with a "deleted_at" timestamp for soft delete
+    }
     return 0;
 }
 
 int assign(int argc, char **argv)
 {
-    // TODO, implement the list command
+    std::string token = argv[2];
+
+    if (token == "user_to_group") {
+        // check for group_name and user_name
+        // do stuff
+    }
+    else if (token == "group_to_department") {
+        // check for group_name and department_name
+        // do stuff
+    }
     return 0;
 }
 
