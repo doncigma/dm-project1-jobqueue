@@ -4,7 +4,20 @@
 
 int add(int argc, char **argv)
 {
-    // TODO, implement the add command
+    /*  
+        Example argv:
+        qadmin add user <first name> <last name> <email> <department> <optional list of group names>
+    */
+
+    std::string token = argv[2];
+
+    if (token == "user") {
+
+    }
+    else if (token == "department") {
+
+    }
+
     return 0;
 }
 
