@@ -1,29 +1,28 @@
 
 #include <string>
 #include <iostream>
+// #include <libpq.h>
 
 int add(int argc, char **argv)
 {
-    /*  
-        Example argv:
-        qadmin add user <first name> <last name> <email> <department> <optional list of group names>
-    */
-    
     std::string token = argv[2];
 
     if (token == "user") {
         for (int i = 3; i < argc; i++) {
             // do stuff to add argv[i] to database somehow
+            // qadmin add user <first name> <last name> <email> <department> <optional list of group names>
         }
     }
     else if (token == "department") {
         for (int i = 3; i < argc; i++) {
             // do stuff to add argv[i] to database somehow
+            // qadmin add department <department name> <department head> <department building>
         }
     }
     else if (token == "group") {
         for (int i = 3; i < argc; i++) {
             // do stuff to add argv[i] to database somehow
+            // qadmin add group <group name> <department name>
         }
     }
 
@@ -59,10 +58,12 @@ int remove(int argc, char **argv)
     if (token == "user") {
         // check for user-specific paramaters like name
         // replace data with a "deleted_at" timestamp for soft delete
+        // qadmin remove user <first name> <last name>
     }
     else if (token == "group") {
         // check for group-specific paramaters like group_name
         // replace data with a "deleted_at" timestamp for soft delete
+        // qadmin remove group <group name>
     }
     return 0;
 }
