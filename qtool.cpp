@@ -13,22 +13,79 @@ void help() {
 }
 
 int submit(int argc, char** argv) {
-    // TODO, implement the submit command
+    // submit new job to qworker
+    // cout << "Job submitted, ID = " << usr.ID << endl;
+    // qtool submit <application> <arguments> <user> <group> <deadline> <resource_requirement>
+    // qtool submit simulation myUser myGroup ‘10-15-2023 15:55:00’ “CPU=5,MEM=10”
     return 0;
 }
 
 int status(int argc, char** argv) {
-    // TODO, implement the status command
+    // qtool status <id>
+    
+    if (argv[2] == job.ID) {
+        if (job.status == "queued") {
+            std::cout << "Job ID: " << job.ID << std::endl;
+            std::cout << "Job User: " << job.user << std::endl;
+            std::cout << "Queued at: " << job.time_stamp << std::endl;
+        }
+        else if (job.status == "running") {
+            std::cout << "Running" << std::endl;
+        }
+        else if (job.status == "completed") {
+            std::cout << "Completed" << std::endl;
+        }
+    }
+
     return 0;
 }
 
 int delete_job(int argc, char** argv) {
-    // TODO, implement the delete command
+    // qtool delete_job <id>
+    
+    if (job.status == "queued") {
+        remove(job.ID);
+        std::cout << "Deletion completed." << std::endl;
+    }
+    else std::cout << "Deletion failed. Job status: " << job.status << std::endl;
+
     return 0;
 }
 
 int jobs(int argc, char** argv) {
-    // TODO, implement the jobs command
+    // qtool jobs (all|running|completed|queued) <user>
+
+    std::string token = argv[2];
+
+    if (token == "all") {
+        // print all jobs for user
+        // print job.ID, application name, job.status, reqs, user
+        // if queued, print time_stamp
+        // if runnung, print start_time
+        // if completed, print completed_time
+    }
+    else if (token == "running") {
+        // print all running jobs for user
+        // print job.ID, application name, job.status, reqs, user
+        // if queued, print time_stamp
+        // if runnung, print start_time
+        // if completed, print completed_time
+    }
+    else if (token == "completed") {
+        // print all completed jobs for user
+        // print job.ID, application name, job.status, reqs, user
+        // if queued, print time_stamp
+        // if runnung, print start_time
+        // if completed, print completed_time 
+    }
+    else if (token == "queued") {
+        // print all queued jobs for user
+        // print job.ID, application name, job.status, reqs, user
+        // if queued, print time_stamp
+        // if runnung, print start_time
+        // if completed, print completed_time
+    }
+
     return 0;
 }
 
