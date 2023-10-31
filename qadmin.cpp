@@ -5,25 +5,36 @@
 
 int add(int argc, char **argv)
 {
-    std::string token = argv[2];
+    if (argc < 3) {
+        std::cout << "Usage: qadmin add user <first name> <last name> <email> <department> <optional list of group names" << std::endl;
+        std::cout << "Usage: qadmin add group <group name> <department name>" << std::endl;
+        std::cout << "Usage: qadmin add department <department name> <department head> <department building>" << std::endl;
+        return 1;
+    }
 
-    if (token == "user") {
+    std::string subcommand = argv[2];
+
+    if (subcommand == "user") {
         for (int i = 3; i < argc; i++) {
-            // do stuff to add argv[i] to database somehow
             // qadmin add user <first name> <last name> <email> <department> <optional list of group names>
+            // Q: do stuff to add argv[i] to database somehow
         }
     }
-    else if (token == "department") {
+    else if (subcommand == "group") {
         for (int i = 3; i < argc; i++) {
-            // do stuff to add argv[i] to database somehow
-            // qadmin add department <department name> <department head> <department building>
-        }
-    }
-    else if (token == "group") {
-        for (int i = 3; i < argc; i++) {
-            // do stuff to add argv[i] to database somehow
             // qadmin add group <group name> <department name>
+            // Q: do stuff to add argv[i] to database somehow
         }
+    }
+    else if (subcommand == "department") {
+        for (int i = 3; i < argc; i++) {
+            // qadmin add department <department name> <department head> <department building>
+            // Q: do stuff to add argv[i] to database somehow
+        }
+    }
+    else {
+        std::cout << "Incorrect input. Check command syntax." << std::endl;
+        return 1;
     }
 
     return 0;
@@ -31,55 +42,99 @@ int add(int argc, char **argv)
 
 int list(int argc, char **argv)
 {
-    std::string token = argv[2];
+    if (argc < 3) {
+        std::cout << "Usage: qadmin list <user|group|department>" << std::endl;
+        return 1;
+    }
 
-    if (token == "user") {
+    std::string subcommand = argv[2];
+
+    if (subcommand == "user") {
         for (int i = 3; i < argc; i++) {
-            // do stuff to print all users
+            // Q: cout << do stuff to print all users
         }
     }
-    else if (token == "department") {
+    else if (subcommand == "department") {
         for (int i = 3; i < argc; i++) {
-            // do stuff to print all departments
+            // Q: cout << do stuff to print all departments
         }
     }
-    else if (token == "group") {
+    else if (subcommand == "group") {
         for (int i = 3; i < argc; i++) {
-            // do stuff to print all groups
+            // Q: cout << do stuff to print all groups
         }
     }
+    else {
+        std::cout << "Incorrect input. Check command syntax." << std::endl;
+        return 1;
+    }
+
     return 0;
 }
 
 int remove(int argc, char **argv)
 {
-    std::string token = argv[2];
+    if (argc < 3) {
+        std::cout << "Usage: qadmin remove <user|group|department> <name>" << std::endl;
+        return 1;
+    }
 
-    if (token == "user") {
-        // check for user-specific paramaters like name
-        // replace data with a "deleted_at" timestamp for soft delete
+    std::string removeType = argv[2];
+
+    if (removeType == "user") {
         // qadmin remove user <first name> <last name>
+        // Q: replace data with a "deleted_at" timestamp for soft delete
+        
+        std::string userName = argv[3];
     }
-    else if (token == "group") {
-        // check for group-specific paramaters like group_name
-        // replace data with a "deleted_at" timestamp for soft delete
+    else if (removeType == "group") {
         // qadmin remove group <group name>
+        // Q: replace data with a "deleted_at" timestamp for soft delete
+        
+        std::string groupName = argv[3];
     }
+    else if (removeType == "department") {
+        // qadmin remove department <department name>
+        // Q: replace data with a "deleted_at" timestamp for soft delete
+        
+        std::string deptName = argv[3];
+    }
+    else {
+        std::cout << "Incorrect input. Check command syntax." << std::endl;
+        return 1;
+    }
+
     return 0;
 }
 
 int assign(int argc, char **argv)
 {
-    std::string token = argv[2];
+    if (argc < 4) {
+        std::cout << "Usage: qadmin assign <user_to_group|group_to_department> <name1> <name2>" << std::endl;
+        return 1;
+    }
 
-    if (token == "user_to_group") {
-        // check for group_name and user_name
-        // do stuff
+    std::string assignType = argv[2];
+    std::string name1 = argv[3];
+    std::string name2 = argv[4];
+
+    if (assignType == "user_to_group") {
+        std::string userName = argv[3];
+        std::string groupName = argv[4];
+
+        // Q: add userName to groupName
     }
-    else if (token == "group_to_department") {
-        // check for group_name and department_name
-        // do stuff
+    else if (assignType == "group_to_department") {
+        std::string groupName = argv[3];
+        std::string deptName = argv[4];
+
+        // Q: add deptName to roupName
     }
+    else {
+        std::cout << "Incorrect input. Check command syntax." << std::endl;
+        return 1;
+    }
+
     return 0;
 }
 
@@ -113,7 +168,7 @@ int main(int argc, char **argv)
 
     if (argc < 2)
     {
-        std::cerr << "Too few arguments provided" << std::endl;
+        std::cout << "Too few arguments provided" << std::endl;
         return 1;
     }
 

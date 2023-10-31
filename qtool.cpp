@@ -1,40 +1,58 @@
-
 #include <string>
 #include <iostream>
 
 void help() {
     std::cout << "qtool" << std::endl;
     std::cout << "Usage: " << std::endl;
-    std::cout << "  qtool submit <APPLICATION> <ARGS> <USER> <GROUP> <DEADLINE> <RESOURCE>" << std::endl;
-    std::cout << "  qtool status <JOB_ID>" << std::endl;
-    std::cout << "  qtool jobs (all|running|completed|queued) <USER>" << std::endl;
-    std::cout << "  qtool delete_job <JOB_ID>" << std::endl;
+    std::cout << "  qtool submit <application> <arguments> <user> <group> <deadline> <resource_requirement>" << std::endl;
+    std::cout << "  qtool status <id>" << std::endl;
+    std::cout << "  qtool jobs (all|running|completed|queued) <user>" << std::endl;
+    std::cout << "  qtool delete_job <id>" << std::endl;
     // TODO: Add any additional help information
 }
 
 int submit(int argc, char** argv) {
     // submit new job to qworker
-    // cout << "Job submitted, ID = " << usr.ID << endl;
     // qtool submit <application> <arguments> <user> <group> <deadline> <resource_requirement>
     // qtool submit simulation myUser myGroup ‘10-15-2023 15:55:00’ “CPU=5,MEM=10”
+    
+    if (argc < 7) {
+        std::cout << "Usage: qtool submit <application> <arguments> <user> <group> <deadline> <resource_requirement>" << std::endl;
+        return 1;
+    }
+    std::string application = argv[2];
+    std::string args = argv[3];
+    std::string user = argv[4];
+    std::string group = argv[5];
+    std::string deadline = argv[6];
+    std::string resource = argv[7];
+    
+    std::string uniqueID = ""; // Q: random ID generator
+    std::cout << "Job submitted, ID = " << uniqueID << std::endl;
     return 0;
 }
 
 int status(int argc, char** argv) {
     // qtool status <id>
     
-    if (argv[2] == job.ID) {
-        if (job.status == "queued") {
-            std::cout << "Job ID: " << job.ID << std::endl;
-            std::cout << "Job User: " << job.user << std::endl;
-            std::cout << "Queued at: " << job.time_stamp << std::endl;
-        }
-        else if (job.status == "running") {
-            std::cout << "Running" << std::endl;
-        }
-        else if (job.status == "completed") {
-            std::cout << "Completed" << std::endl;
-        }
+    if (argc < 3) {
+        std::cout << "Usage: qtool status <id>" << std::endl;
+        return 1;
+    }
+
+    std::string status = argv[1];
+    std::string ID = argv[2];
+
+    if (status == "queued") {
+        std::cout << "Job ID: " << ID << std::endl;
+        std::cout << "Job User: " << job.user << std::endl; // Q: somehow access jobs user and time_stamp from database
+        std::cout << "Queued at: " << job.time_stamp << std::endl; // ^^
+    }
+    else if (status == "running") {
+        std::cout << "Running" << std::endl;
+    }
+    else if (status == "completed") {
+        std::cout << "Completed" << std::endl;
     }
 
     return 0;
@@ -43,11 +61,18 @@ int status(int argc, char** argv) {
 int delete_job(int argc, char** argv) {
     // qtool delete_job <id>
     
-    if (job.status == "queued") {
-        remove(job.ID);
+    if (argc < 3) {
+        std::cout << "Usage: qtool delete_job <id>" << std::endl;
+        return 1;
+    }
+    std::string status = argv[1];
+    std::string ID = argv[2];
+
+    if (status == "queued") {
+        // Q: somehow remove job based on ID
         std::cout << "Deletion completed." << std::endl;
     }
-    else std::cout << "Deletion failed. Job status: " << job.status << std::endl;
+    else std::cout << "Deletion failed. Job status: " << status << std::endl;
 
     return 0;
 }
@@ -55,35 +80,33 @@ int delete_job(int argc, char** argv) {
 int jobs(int argc, char** argv) {
     // qtool jobs (all|running|completed|queued) <user>
 
-    std::string token = argv[2];
+    if (argc < 3) {
+        std::cout << "Usage: qtool jobs (all|running|completed|queued) <user>" << std::endl;
+        return 1;
+    }
+    std::string filter = argv[2];
+    std::string user = argv[3];
 
-    if (token == "all") {
+    std::string subcommand = argv[2];
+
+    if (subcommand == "all") {
         // print all jobs for user
-        // print job.ID, application name, job.status, reqs, user
+        // Q: print job.ID, application name, job.status, reqs, user
         // if queued, print time_stamp
         // if runnung, print start_time
         // if completed, print completed_time
     }
-    else if (token == "running") {
+    else if (subcommand == "running") {
         // print all running jobs for user
-        // print job.ID, application name, job.status, reqs, user
-        // if queued, print time_stamp
-        // if runnung, print start_time
-        // if completed, print completed_time
+        // Q: print job.ID, application name, job.status, reqs, user, print start_time
     }
-    else if (token == "completed") {
+    else if (subcommand == "completed") {
         // print all completed jobs for user
-        // print job.ID, application name, job.status, reqs, user
-        // if queued, print time_stamp
-        // if runnung, print start_time
-        // if completed, print completed_time 
+        // Q: print job.ID, application name, job.status, reqs, user, print completed_time 
     }
-    else if (token == "queued") {
+    else if (subcommand == "queued") {
         // print all queued jobs for user
-        // print job.ID, application name, job.status, reqs, user
-        // if queued, print time_stamp
-        // if runnung, print start_time
-        // if completed, print completed_time
+        // Q: print job.ID, application name, job.status, reqs, user, print time_stamp
     }
 
     return 0;
@@ -115,13 +138,17 @@ int main(int argc, char** argv) {
 
     if (subcommand == "submit") {
         return submit(argc, argv);
-    } else if (subcommand == "status") {
+    } 
+    else if (subcommand == "status") {
         return status(argc, argv);
-    } else if (subcommand == "delete_job") {
+    } 
+    else if (subcommand == "delete_job") {
         return delete_job(argc, argv);
-    } else if (subcommand == "jobs") {
+    } 
+    else if (subcommand == "jobs") {
         return jobs(argc, argv);
-    } else {
+    } 
+    else {
         std::cout << "Unknown subcommand: " << subcommand;
         help();
     }
