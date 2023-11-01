@@ -43,10 +43,13 @@ int status(int argc, char** argv) {
     std::string status = argv[1];
     std::string ID = argv[2];
 
+    std::string user = "";
+    std::string time_stamp = "";
+
     if (status == "queued") {
         std::cout << "Job ID: " << ID << std::endl;
-        std::cout << "Job User: " << job.user << std::endl; // Q: somehow access jobs user and time_stamp from database
-        std::cout << "Queued at: " << job.time_stamp << std::endl; // ^^
+        std::cout << "Job User: " << user << std::endl; // Q: somehow access jobs user and time_stamp from database
+        std::cout << "Queued at: " << time_stamp << std::endl; // ^^
     }
     else if (status == "running") {
         std::cout << "Running" << std::endl;
@@ -84,10 +87,9 @@ int jobs(int argc, char** argv) {
         std::cout << "Usage: qtool jobs (all|running|completed|queued) <user>" << std::endl;
         return 1;
     }
-    std::string filter = argv[2];
-    std::string user = argv[3];
-
+    
     std::string subcommand = argv[2];
+    std::string user = argv[3];
 
     if (subcommand == "all") {
         // print all jobs for user

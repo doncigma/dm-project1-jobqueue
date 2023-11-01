@@ -52,7 +52,7 @@ std::string schedulingPolicy;
 int main(int argc, char** argv) {
 
     // Register signalHandler to gracefully terminate the process when ctrl-l is pressed in the terminal
-    signal(SIGINT, signalHandler);
+    //signal(SIGINT, signalHandler);
 
     if (argc < 4) {
         std::cerr << "Invalid arguments passed" << std::endl;

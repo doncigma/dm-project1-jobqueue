@@ -33,16 +33,19 @@ clean:
 # Run 'make qadmin' to build the qadmin tool
 #
 qadmin: qadmin.cpp
-	g++ -std=c++17 qadmin.cpp -o qadmin -I "C:\Program Files\PostgreSQL\16rc1\lib\libpq.lib"
+	g++ -std=c++17 qadmin.cpp -o qadmin -I "/mnt/c/Program Files/PostgreSQL/16rc1/include"
+	
+#"/mnt/c/Program\ Files/PostgreSQL/16rc1/include/libpq-fe.h"
+#"C:\Program Files\PostgreSQL\16rc1\include\libpq-fe.h" "\\wsl.localhost\Ubuntu\usr\include\postgresql\libpq-fe.h"
 
 #
 # Run 'make qtool' to build the qadmin tool
 #
 qtool: qtool.cpp
-	g++ -std=c++17 qtool.cpp -o qtool -I "C:\Program Files\PostgreSQL\16rc1\lib\libpq.lib"
+	g++ -std=c++17 qtool.cpp
 
 #
 # Run 'make qworker' to build the qadmin tool
 #
 qworker: qworker.cpp jobs.cpp jobs.h
-	g++ -std=c++17 qworker.cpp jobs.cpp -o qworker -I "C:\Program Files\PostgreSQL\16rc1\lib\libpq.lib"
+	g++ -std=c++17 qworker.cpp jobs.cpp
