@@ -1,10 +1,8 @@
-
 #include <string>
 #include <iostream>
 #include "libpq-fe.h"
 
-static void
-exit_nicely(PGconn *conn)
+static void exit_nicely(PGconn *conn)
 {
     PQfinish(conn);
     exit(1);
@@ -14,11 +12,10 @@ int add(int argc, char **argv)
 {
     // Connection to database
     const char *conninfo;
-    PGconn     *conn;
-    PGresult   *res;
-    int         nFields;
-    int         i,
-                j;
+    PGconn *conn;
+    PGresult *res;
+    int nFields;
+    int i, j;
 
     if (argc > 1) {
         conninfo = argv[1];
@@ -84,42 +81,46 @@ int add(int argc, char **argv)
     }
 
     std::string subcommand = argv[2];
-    std::string query = "BEGIN;";
+    char* query = "BEGIN;";
 
     if (subcommand == "user") {
         // qadmin add user <first name> <last name> <email> <department> <optional list of group names>
-        std::string firstName = argv[3];
-        std::string lastName = argv[4];
-        std::string email = argv[5];
-        std::string deptName = argv[6];
-        if (argc > 6) {std::string listGroupNames = argv[7];}
+        const char* firstName = " " + *argv[3];
+        const char* lastName = " " + *argv[4];
+        const char* email = " " + *argv[5];
+        const char* deptName = " " + *argv[6];
+        if (argc > 7) {const char* listGroupNames = " " + *argv[7];}
     }
     else if (subcommand == "group") {
         // qadmin add group <group name> <department name>
         
-        std::string groupName = argv[3];
-        std::string deptName = argv[4];
+        const char* groupName = " " + *argv[3];
+        const char* deptName = " " + *argv[4];
 
     }
     else if (subcommand == "department") {
         // qadmin add department <department name> <department head> <department building>
-        // Q: do stuff to add argv[i] to database somehow
 
-        /* Start a transaction block */
-        res = PQexec(conn, "BEGIN;");
-        if (PQresultStatus(res) != PGRES_COMMAND_OK)
-        {
-            fprintf(stderr, "BEGIN command failed: %s", PQerrorMessage(conn));
-            PQclear(res);
-            exit_nicely(conn);
-        }
-        PQclear(res);
-
+        const char* deptName = " " + *argv[3];
+        const char* deptHead = " " + *argv[4];
+        const char* deptBuilding = " " + *argv[5];
+        
+        query = deptName + deptHead + deptBuilding;
     }
     else {
         std::cout << "Incorrect input. Check command syntax." << std::endl;
         return 1;
     }
+
+    /* Start a transaction block */
+    res = PQexec(conn, query);
+    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, "BEGIN command failed: %s", PQerrorMessage(conn));
+        PQclear(res);
+        exit_nicely(conn);
+    }
+    PQclear(res);
 
     return 0;
 }
