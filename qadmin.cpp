@@ -269,7 +269,7 @@ int list(int argc, char **argv)
             PQclear(res);
             exit_nicely(conn);
         }
-        
+    
         /* Print out the attribute names */
         nFields = PQnfields(res);
         for (i = 0; i < nFields; i++) {
@@ -371,6 +371,7 @@ int remove(int argc, char **argv)
         std::string firstName = argv[3];
         std::string lastName = argv[4];
 
+        {
         /* Setting data for update */
         query = "SELECT Deleted_Status FROM Users WHERE First_Name='" + userName + "' AND Last_Name='" + lastName + "' FOR UPDATE";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
@@ -383,7 +384,9 @@ int remove(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
 
+        {
         /* Running query */
         query = "UPDATE Users SET Deleted_Status=1 WHERE First_Name='" + userName + "' AND Last_Name='" + lastName + "' COMMIT";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
@@ -396,6 +399,7 @@ int remove(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
 
         /* close the portal ... we don't bother to check for errors ... */
         res = PQexec(conn, "CLOSE myportal");
@@ -420,6 +424,7 @@ int remove(int argc, char **argv)
 
         std::string groupName = argv[3];
 
+        {
         /* Setting data for update */
         query = "SELECT Deleted_Status FROM Groups WHERE Group_Name='" + groupName + "' FOR UPDATE";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
@@ -432,7 +437,9 @@ int remove(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
 
+        {
         /* Running query */
         query = "UPDATE Groups SET Deleted_Status=1 WHERE Group_Name='" + groupName + "' COMMIT";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
@@ -445,6 +452,7 @@ int remove(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
 
         /* close the portal ... we don't bother to check for errors ... */
         res = PQexec(conn, "CLOSE myportal");
@@ -469,6 +477,7 @@ int remove(int argc, char **argv)
 
         std::string deptName = argv[3];
 
+        {
         /* Setting data for update */
         query = "SELECT Deleted_Status FROM Departments WHERE Department_Name='" + deptName + "' FOR UPDATE";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
@@ -481,7 +490,9 @@ int remove(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
 
+        {
         /* Running query */
         query = "UPDATE Departments SET Deleted_Status=1 WHERE Department_Name='" + deptName + "' COMMIT";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
@@ -494,6 +505,7 @@ int remove(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
 
         /* close the portal ... we don't bother to check for errors ... */
         res = PQexec(conn, "CLOSE myportal");
@@ -584,6 +596,7 @@ int assign(int argc, char **argv)
         }
         PQclear(res);
 
+        {
         query = "SELECT Groups_In FROM Users WHERE First_Name='" + firstName + "' FOR UPDATE";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
 
@@ -596,7 +609,9 @@ int assign(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
 
+        {
         query = "UPDATE Users SET Groups_In='" + groupName + "' WHERE First_Name='" + firstName + "' COMMIT";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
 
@@ -609,7 +624,7 @@ int assign(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
-        
+        }
     }
     else if (assignType == "group_to_department") {
         std::string groupName = name1;
@@ -625,6 +640,7 @@ int assign(int argc, char **argv)
         }
         PQclear(res);
 
+        {
         query = "SELECT Department FROM Groups WHERE Group_Name='" + groupName + "' FOR UPDATE";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
 
@@ -637,7 +653,9 @@ int assign(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
 
+        {
         query = "UPDATE Groups SET Department='" + deptName + "' WHERE Group_Name='" + groupName + "' COMMIT";
         const char* queryPtr = query.c_str(); // turns query into type of PQexec paramater
 
@@ -650,6 +668,7 @@ int assign(int argc, char **argv)
             exit_nicely(conn);
         }
         PQclear(res);
+        }
     }
     else {
         std::cout << "Incorrect input. Check command syntax." << std::endl;
