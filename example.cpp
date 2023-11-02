@@ -103,15 +103,16 @@ main(int argc, char **argv)
 
     /* first, print out the attribute names */
     nFields = PQnfields(res);
-    for (i = 0; i < nFields; i++)
+    for (i = 0; i < nFields; i++) {
         printf("%-15s", PQfname(res, i));
+    }
     printf("\n\n");
 
     /* next, print out the rows */
-    for (i = 0; i < PQntuples(res); i++)
-    {
-        for (j = 0; j < nFields; j++)
+    for (i = 0; i < PQntuples(res); i++) {
+        for (j = 0; j < nFields; j++) {
             printf("%-15s", PQgetvalue(res, i, j));
+        }
         printf("\n");
     }
 

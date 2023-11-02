@@ -42,10 +42,10 @@ qadmin: qadmin.cpp
 # Run 'make qtool' to build the qadmin tool
 #
 qtool: qtool.cpp
-	g++ -std=c++17 qtool.cpp
+	g++ -std=c++17 qtool.cpp -o qtool -I "/mnt/c/Program Files/PostgreSQL/16rc1/include" -L "/mnt/Program Files/PostgreSQL/16rc1/lib" -lpq
 
 #
 # Run 'make qworker' to build the qadmin tool
 #
 qworker: qworker.cpp jobs.cpp jobs.h
-	g++ -std=c++17 qworker.cpp jobs.cpp
+	g++ -std=c++17 qworker.cpp jobs.cpp -o qworker -I "/mnt/c/Program Files/PostgreSQL/16rc1/include" -L "/mnt/Program Files/PostgreSQL/16rc1/lib" -lpq
