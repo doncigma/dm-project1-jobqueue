@@ -33,7 +33,7 @@ clean:
 # Run 'make qadmin' to build the qadmin tool
 #
 qadmin: qadmin.cpp
-	g++ -std=c++17 qadmin.cpp -o qadmin -I "/mnt/c/Program Files/PostgreSQL/16rc1/include"
+	g++ -std=c++17 qadmin.cpp -o qadmin -I "/mnt/c/Program Files/PostgreSQL/16rc1/include" -L "/mnt/Program Files/PostgreSQL/16rc1/lib" -lpq
 	
 #"/mnt/c/Program\ Files/PostgreSQL/16rc1/include/libpq-fe.h"
 #"C:\Program Files\PostgreSQL\16rc1\include\libpq-fe.h" "\\wsl.localhost\Ubuntu\usr\include\postgresql\libpq-fe.h"
